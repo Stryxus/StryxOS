@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check build-only",
-    "build-dev": "webpack --mode development",
-    "build-prod": "webpack --mode production",
-    "preview": "vite preview --port 4173",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit",
+    "vite-dev": "vite",
+    "vite-pre": "vite preview --port 4173",
+    "vite-build-prod": "run-p check vite-build-only",
+    "vite-build-only-prod": "vite build",
+    "wp-dev": "webpack serve --mode development",
+    "wp-build-dev": "webpack --mode development",
+    "wp-build-prod": "webpack --mode production",
+    "check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {

@@ -1,3 +1,4 @@
+import webpack from "webpack";
 import path from "path";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
@@ -9,7 +10,12 @@ const config = {
   entry: "./src/main.ts",
   output: {
     path: path.resolve(path.resolve(), "dist"),
-    filename: "bundle.ts",
+    filename: "src/main.ts",
+  },
+  devServer: {
+    devMiddleware: {
+      mimeTypes: { ts: "text/javascript" },
+    },
   },
   module: {
     rules: [
@@ -49,6 +55,10 @@ const config = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false,
+    }),
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [{ from: "index.html" }],
