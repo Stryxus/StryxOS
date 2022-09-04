@@ -1,5 +1,5 @@
 /*
-    This script serves as a much more flexible solution to converting assets into better formats. Webpack support for the latest formats sure is slow...
+    This script serves as a much more flexible solution for converting assets into better formats. Webpack support for the latest formats sure is slow...
 */
 import {
   readFileSync,
@@ -24,11 +24,11 @@ function transcodePNGToAVIF(itempath) {
         if (fileExists()) unlinkSync(output);
         writeFileSync(output, data);
         unlinkSync(itempath);
-        console.log(`Transcoded Image:    ${sep}${itempath} > ${sep}${output}`);
+        console.log(`Transcoded Image: ${sep}${itempath} > ${sep}${output}`);
       })
       .catch((err) => console.error(err));
   } catch (e) {
-    console.error(`  | PNG To AVIF Trancoding Error: ${e}`);
+    console.error(`PNG To AVIF Trancoding Error: ${e}`);
   }
 }
 
