@@ -63,7 +63,7 @@ const config = {
     new CompressionPlugin({
       filename: "[path][base].br",
       algorithm: "brotliCompress",
-      test: /\.(js|css|html|svg|woff2)$/,
+      test: /\.(js|css|html|svg|woff2)$/, // TODO: Figure out a way to compress everything which is explicitly imported.
       compressionOptions: {
         params: {
           [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
