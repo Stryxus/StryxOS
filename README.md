@@ -12,6 +12,12 @@ The official repository for StryxOS.
 npm i
 ```
 
+### Optimize assets outside of [Webpack](https://webpack.js.org/)
+
+```sh
+npm run opt
+```
+
 ### Compile and Hot-Reload for Development with [Webpack](https://webpack.js.org/)
 
 ```sh
