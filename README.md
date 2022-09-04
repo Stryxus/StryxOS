@@ -12,26 +12,16 @@ The official repository for StryxOS.
 npm i
 ```
 
-### Compile and Hot-Reload for Development
+### Compile and Hot-Reload for Development with [Webpack](https://webpack.js.org/)
 
-For Webpack
 ```sh
 npm run wp-dev
 ```
-For Vite
-```sh
-npm run vite-dev
-```
 
-### Compile and Minify for Production
+### Compile and Minify for Production with [Webpack](https://webpack.js.org/)
 
-For Webpack
 ```sh
 npm run wp-build-prod
-```
-For Vite
-```sh
-npm run vite-build-prod
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
