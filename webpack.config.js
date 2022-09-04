@@ -1,10 +1,14 @@
-import webpack from "webpack";
+import { fileURLToPath, URL } from "node:url";
 import path from "path";
+import zlib from "zlib";
+
+import webpack from "webpack";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
-import BundleAnalyzerPlugin from "webpack-bundle-analyzer";
+import TerserPlugin from "terser-webpack-plugin";
+import CompressionPlugin from "compression-webpack-plugin";
+
 import { VueLoaderPlugin } from "vue-loader";
-import { fileURLToPath, URL } from "node:url";
 
 const config = {
   entry: "./src/main.ts",
@@ -20,11 +24,16 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.scss$/,
-        use: ["vue-style-loader", "css-loader", "sass-loader"],
+        test: /\.(sass|scss)(\?.*)?$/,
+        use: [
+          "vue-style-loader",
+          { loader: "css-loader", options: { sourceMap: true } },
+          { loader: "resolve-url-loader", options: { sourceMap: true } },
+          { loader: "sass-loader", options: { sourceMap: true } },
+        ],
       },
       {
-        test: /\.svg$/,
+        test: /\.(svg|woff2|json|avif|mp4|aac)(\?.*)?$/,
         use: "file-loader",
       },
       {
@@ -39,19 +48,6 @@ const config = {
           appendTsSuffixTo: [/\.vue$/],
         },
       },
-      {
-        test: /\.(png)(\?.*)?$/,
-        loader: "sharp-loader",
-        options: {
-          name: "[name].[hash:8].[ext]",
-          cacheDirectory: true,
-          presets: {
-            default: () => {
-              return ["avif", { format: "avif", quality: 75, effort: 9 }];
-            },
-          },
-        },
-      },
     ],
   },
   plugins: [
@@ -59,21 +55,37 @@ const config = {
       __VUE_OPTIONS_API__: true,
       __VUE_PROD_DEVTOOLS__: false,
     }),
+    new VueLoaderPlugin(),
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [{ from: "index.html" }],
     }),
-    new BundleAnalyzerPlugin.BundleAnalyzerPlugin({
-      analyzerMode: "static",
-      openAnalyzer: false,
+    new CompressionPlugin({
+      filename: "[path][base].br",
+      algorithm: "brotliCompress",
+      test: /\.(js|css|html|svg|woff2)$/,
+      compressionOptions: {
+        params: {
+          [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+        },
+      },
+      threshold: 10240,
+      minRatio: 0.8,
+      deleteOriginalAssets: false,
     }),
-    new VueLoaderPlugin(),
   ],
   resolve: {
     extensions: [".js", ".vue", ".ts"],
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
+  performance: {
+    hints: false,
   },
 };
 
