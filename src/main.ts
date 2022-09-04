@@ -33,7 +33,7 @@ import "./assets/fonts/SFPro/SF-Pro-Display-ThinItalic.woff2";
 import "./assets/fonts/SFPro/SF-Pro-Display-UltraThin.woff2";
 import "./assets/fonts/SFPro/SF-Pro-Display-UltraThinItalic.woff2";
 
-import "./assets/img/test.png";
+import "./assets/img/test.avif";
 
 import "./assets/bundle.sass";
 /* */
